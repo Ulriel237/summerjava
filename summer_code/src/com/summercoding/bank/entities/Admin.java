@@ -180,9 +180,9 @@ public class Admin {
          try {
              Admin admin = new Admin();
              //admin.save("tam","gilbert","dangote");
-             //String result = admin.getOne(2).toString();
+             String result = admin.getOne(2).toString();
              //System.out.println(result);
-            String result = admin.getByLoginAndPassword("[marc]","[marc]").toString();
+           // String result = admin.getByLoginAndPassword("marc","marc").toString();
              System.out.println(result);
              
               //String result = admin.getAllAdmin().toString();
@@ -195,4 +195,5 @@ public class Admin {
          }
     }
 
+ 
 }

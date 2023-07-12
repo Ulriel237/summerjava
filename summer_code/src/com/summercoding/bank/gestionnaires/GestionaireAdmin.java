@@ -27,7 +27,22 @@ public class GestionaireAdmin {
         admin.save(login, password, nom);
     }
 
+      public void delateAdmin(int idadmin) throws SQLException {
+
+        admin.delate(idadmin);
+    }
+
+      public void updateAdmin(int idadmin, String login, String password, String nom) throws SQLException {
+
+        admin.update(idadmin, login, password, nom);
+    }
+
     public List<Admin> listAllAdmin() throws SQLException {
         return admin.getAllAdmin();
+    }
+    
+    public Admin getAdminDetails(int idadmin) throws SQLException{
+    
+        return admin.getOne(idadmin);
     }
 }

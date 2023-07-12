@@ -9,9 +9,11 @@ import com.summercoding.bank.controlleur.Controlleur;
 import com.summercoding.bank.entities.Admin;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,9 +22,8 @@ import javax.swing.JOptionPane;
 public class JFramesaveUtilisateur extends javax.swing.JFrame {
 
     Controlleur controlleur = new Controlleur();
-    //private Object controlleur;
-    //Controlleur controlleur = new Controlleur();
-
+     String quelaction;
+    JFrameHome homePage;
     /**
      * Creates new form JFramesaveUtilisateur
      */
@@ -51,6 +52,7 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
             Logger.getLogger(JFramesaveUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
     }
 
     /**
@@ -83,8 +85,10 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
         RadioButtonFeminin = new javax.swing.JRadioButton();
         RadioButtonMasculin = new javax.swing.JRadioButton();
         ComboBoxAdmin = new javax.swing.JComboBox();
+        updateUser = new javax.swing.JButton();
+        delateUser = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Login");
 
@@ -113,7 +117,7 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
             }
         });
 
-        ButtonEnter.setText("ENTER");
+        ButtonEnter.setText("Add");
         ButtonEnter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonEnterActionPerformed(evt);
@@ -146,13 +150,29 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
             }
         });
 
+        updateUser.setText("Update");
+        updateUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateUserActionPerformed(evt);
+            }
+        });
+
+        delateUser.setText("Delate");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(updateUser)
+                        .addGap(18, 18, 18)
+                        .addComponent(delateUser)
+                        .addGap(18, 18, 18)
+                        .addComponent(ButtonEnter))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -181,16 +201,12 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
                                 .addGap(0, 81, Short.MAX_VALUE))
                             .addComponent(champsLogin)
                             .addComponent(champsNom)
-                            .addComponent(champsPrenom))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ButtonAnnuler)
-                        .addGap(27, 27, 27)))
+                            .addComponent(champsPrenom))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ComboBoxJour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonEnter))
-                .addGap(27, 27, 27))
+                    .addComponent(ButtonAnnuler))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,6 +253,8 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonEnter)
+                    .addComponent(updateUser)
+                    .addComponent(delateUser)
                     .addComponent(ButtonAnnuler))
                 .addGap(64, 64, 64))
         );
@@ -318,6 +336,11 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_champsNomActionPerformed
 
+    private void updateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_updateUserActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -352,7 +375,20 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
             }
         });
     }
+  private void refreshTable() throws SQLException {
+        DefaultTableModel model = new DefaultTableModel();
 
+        model.addColumn("Id");
+        model.addColumn("Nom");
+        model.addColumn("Login");
+
+        List<Admin> listAdmin = controlleur.routeVerlistAllAdmin();
+        for (Admin ad : listAdmin) {
+            model.addRow(new String[]{ad.getIdadmin() + "", ad.getNom(), ad.getLogin()});
+        }
+
+        homePage.getTable().setModel(model);
+  }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ButtonAnnuler;
     private javax.swing.JToggleButton ButtonEnter;
@@ -367,6 +403,7 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
     private javax.swing.JTextField champsNom;
     private javax.swing.JPasswordField champsPassword;
     private javax.swing.JTextField champsPrenom;
+    private javax.swing.JButton delateUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -375,5 +412,6 @@ public class JFramesaveUtilisateur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton updateUser;
     // End of variables declaration//GEN-END:variables
 }

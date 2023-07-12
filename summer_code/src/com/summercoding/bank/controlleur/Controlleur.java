@@ -34,6 +34,18 @@ public class Controlleur {
         gestionaireAdmin.saveAdmin(login, password, nom);
     }
 
+    
+    public void routeVerupdateAdmin(int idadmin, String login, String password, String nom) throws SQLException {
+
+        gestionaireAdmin.updateAdmin(idadmin, login, password, nom);
+    }
+
+      
+    public void routeVerdelateAdmin(int idadmin) throws SQLException {
+
+        gestionaireAdmin.delateAdmin(idadmin);
+    }
+
     GestionaireUtilisateur gestionaireUtilisateur = new GestionaireUtilisateur();
 
     public void routeVersaveUtilisateur(String login, String password, String nom, String prenom, LocalDate datenaiss, String genre, int idadmin) throws SQLException {
@@ -54,4 +66,9 @@ public class Controlleur {
         return gestionaireUtilisateur.ListAllUtilisateur();
     }
 
+        
+    public Admin routeVergetAdminDetails(int idadmin) throws SQLException{
+    
+        return gestionaireAdmin.getAdminDetails(idadmin);
+    }
 }
